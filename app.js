@@ -1,20 +1,31 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+const assignmentRoutes = require("./routes/assignmentRoutes");
 
 const app = express();
 
-// Use PORT from .env later; for now default 4000
-const PORT = process.env.PORT || 4000;
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected ✅"))
+  .catch((err) => console.log("MongoDB connection error ❌", err));
 
-// Middleware to serve static files (we'll use /public later)
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware
+app.use(express.urlencoded({ extended: true })); // to read form data
+app.use(express.static(path.join(__dirname, "public"))); // for CSS, images, etc.
 
-// Test route for now
-app.get('/', (req, res) => {
-  res.send('INFR3120 Assignment 3 – app is running ✅');
-});
+// View engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// Routes
+app.use("/", assignmentRoutes);
 
 // Start server
+const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`INFR3120 Assignment 3 – app is running on http://localhost:${PORT} ✅`);
 });
