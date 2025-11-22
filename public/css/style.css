@@ -1,0 +1,17 @@
+body {
+  background: #0b1724;
+  color: #f8f9fa;
+}
+
+.table {
+  background: #ffffff;
+  color: #212529;
+}
+
+h1, h2 {
+  font-weight: 600;
+}
+
+main.container {
+  min-height: 70vh;
+}

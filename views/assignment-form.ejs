@@ -1,0 +1,67 @@
+<%- include("partials/header") %>
+
+<h2><%= assignment ? "Edit Assignment" : "Create Assignment" %></h2>
+
+<form
+  action="<%= assignment ? '/assignments/edit/' + assignment._id : '/assignments/create' %>"
+  method="POST"
+  class="mt-3"
+>
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input
+      type="text"
+      name="title"
+      class="form-control"
+      required
+      value="<%= assignment ? assignment.title : '' %>"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Course</label>
+    <input
+      type="text"
+      name="course"
+      class="form-control"
+      required
+      value="<%= assignment ? assignment.course : '' %>"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Due Date</label>
+    <input
+      type="date"
+      name="dueDate"
+      class="form-control"
+      required
+      value="<%= assignment ? assignment.dueDate.toISOString().slice(0, 10) : '' %>"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Status</label>
+    <select name="status" class="form-select">
+      <option value="Not Started" <%= assignment && assignment.status === "Not Started" ? "selected" : "" %>>Not Started</option>
+      <option value="In Progress" <%= assignment && assignment.status === "In Progress" ? "selected" : "" %>>In Progress</option>
+      <option value="Completed" <%= assignment && assignment.status === "Completed" ? "selected" : "" %>>Completed</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea
+      name="description"
+      class="form-control"
+      rows="3"
+    ><%= assignment ? assignment.description : "" %></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <%= assignment ? "Update" : "Create" %>
+  </button>
+  <a href="/assignments" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+
+<%- include("partials/footer") %>

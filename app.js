@@ -7,14 +7,14 @@ const assignmentRoutes = require("./routes/assignmentRoutes");
 
 const app = express();
 
-// Connect to MongoDB
+// Connect to MongoDB using MONGO_URI from .env
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected ✅"))
   .catch((err) => console.log("MongoDB connection error ❌", err));
 
 // Middleware
-app.use(express.urlencoded({ extended: true })); // to read form data
+app.use(express.urlencoded({ extended: true })); // to read form data from POST
 app.use(express.static(path.join(__dirname, "public"))); // for CSS, images, etc.
 
 // View engine
